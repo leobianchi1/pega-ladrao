@@ -23,7 +23,7 @@ df = pd.DataFrame({
 df["data_ingestao"] = datetime.now()
 
 # Salvar
-df.to_csv("data/compras_raw.csv", index=False, sep=";", encoding="utf-8-sig")
+df.to_csv(""data/bronze/compras_raw.csv", index=False, sep=";", encoding="utf-8-sig")
 
 print("OK - dados gerados")
 print(df.head())
