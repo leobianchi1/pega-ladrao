@@ -1,67 +1,75 @@
-# 🕵️ pega-ladrao
+Análise de despesas públicas com foco em variação de preços
 
-Sistema de detecção de possíveis sobrepreços em compras corporativas utilizando análise estatística e comparação com mercado externo.
+Este projeto nasceu de uma inquietação simples.
+Será que dá para identificar padrões estranhos em compras públicas usando apenas dados abertos e uma lógica estatística básica?
 
----
+A resposta é sim.
 
-## 🎯 Problema
+O que foi feito
 
-Empresas e instituições frequentemente realizam compras com pouca visibilidade sobre o preço real de mercado, abrindo espaço para:
+A ideia foi montar um fluxo simples, mas consistente:
 
-- sobrepreço
-- inconsistências entre setores
-- falhas de controle
+ler dados de pagamentos
+ler dados de itens comprados
+cruzar essas informações
+calcular o preço unitário
+comparar itens iguais entre si
 
----
+A partir disso, usei Z-score para identificar valores que fogem do padrão.
 
-## 🧠 Solução
+Nada sofisticado demais. Mas suficiente para começar a enxergar inconsistências.
 
-Pipeline de dados em 3 camadas:
+O que o projeto mostra
 
-### 🥉 Bronze
-- Geração e ingestão de dados brutos
-
-### 🥈 Silver
-- Limpeza e padronização
-- Cálculo de Z-Score por centro de custo
-- Identificação de desvios internos
-
-### 🥇 Gold
-- Integração com preços de mercado (API)
-- Ajuste por deflação
-- Comparação com referências públicas (TCU/TCE)
-- Classificação de risco
-
----
-
-## ⚙️ Tecnologias
-
-- Python
-- Pandas
-- Scikit-learn
-- Requests
-- Git / GitHub
-
----
-
-## 📊 Resultado
-
-O sistema identifica automaticamente compras com potencial de:
-
-- sobrepreço confirmado
-- desvio de mercado
-- necessidade de investigação
+Quando você compara o mesmo item, aparecem situações interessantes.
 
 Exemplo:
 
-| id_compra | valor | preco_deflacionado | analise_final |
-|----------|------|--------------------|--------------|
-| 70       | 9870 | 5200               | CRÍTICO      |
+luva hospitalar com preço médio próximo de 2,50
+registros do mesmo item chegando a 6,80
 
----
+Ou ainda:
 
-## 🚀 Como rodar
+seringa descartável na faixa de 1,20
+registros acima de 4,90
 
-```bash
-python src/ingestion/ingest_compras.py
-python src/enrichment/enrich_compras.py
+Isso não prova irregularidade.
+Mas levanta uma pergunta legítima.
+
+Por que o mesmo item varia tanto?
+
+Como funciona a detecção
+
+Para cada item, é calculado o desvio em relação à média.
+
+Se um valor se distancia demais do comportamento normal daquele item, ele é marcado como anomalia.
+
+Na prática:
+
+valores próximos da média passam despercebidos
+valores muito acima começam a aparecer no radar
+Estrutura do projeto
+
+O projeto foi organizado de forma simples:
+
+pasta de coleta
+pasta de ingestão
+pasta de processamento
+dados separados entre bruto e tratado
+
+Isso facilita evoluir depois sem bagunçar tudo.
+
+O que dá para evoluir
+
+Esse é só o começo.
+
+Daria para avançar bastante:
+
+usar dados reais do Portal da Transparência
+cruzar com contratos e fornecedores
+analisar por órgão público
+criar um painel visual
+construir um score de risco mais completo
+Por que esse projeto importa
+
+Dados públicos estão aí, mas raramente são explorados de forma prática.
