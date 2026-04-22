@@ -41,7 +41,6 @@ print(f"CAMINHO DO ARQUIVO: {FILE_PATH}")
 print("-" * 34)
 
 # 4. SALVAMENTO DOS DADOS
-# Usamos sep=';' e encoding='utf-8-sig' para abrir direto no Excel sem erros
 df.to_csv(FILE_PATH, index=False, sep=";", encoding="utf-8-sig")
 
 print("OK - dados gerados com sucesso!")
